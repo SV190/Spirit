@@ -3,24 +3,42 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const tintColorLight = "#0a7ea4";
+const tintColorDark = "#235D3A";
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: "#000",
+    background: "#FFF",
+    tint: "#2f95dc",
+    tabIconDefault: "#ccc",
+    tabIconSelected: "#2f95dc",
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: "#FFF",
+    background: "#1E1E1E", // Тёмный фон
+    tint: "#00FFFF", // Цвет активных иконок
+    tabIconDefault: "#999", // Цвет неактивных иконок
+    tabIconSelected: "#00FFFF", // Цвет выбранной иконки
   },
 };
+
+// constants/Colors.ts
+
+const GameColors = {
+  Dota2: {
+    Color: "#A61B19", // Оранжевый цвет для Dota 2
+  },
+  LoL: {
+    Color: "#03404B", // Синий цвет для LoL
+  },
+  CSGO: {
+    Color: "#FBAC18", // Зеленый цвет для CSGO
+  },
+  Valorant: {
+    Color: "#FF4655", // Коричневый цвет для Valorant
+  },
+  // Добавьте другие игры по необходимости
+};
+
+export default GameColors;

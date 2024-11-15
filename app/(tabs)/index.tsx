@@ -1,70 +1,132 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+// App.tsx
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import MatchCard, { MatchProps } from "@/components/MatchCard"; // Путь к файлу MatchCard
+import GameColors from "@/constants/Colors"; // Импортируем цвета для игр
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const matches: MatchProps[] = [
+  {
+    id: "1",
+    team1: "Liquid",
+    team2: "OG",
+    score: "2 - 1",
+    tournament: "ESL One Bangkok 2024",
+    logo1: require("@/assets/images/teams/TL.png"),
+    logo2: require("@/assets/images/teams/og.png"),
+    game: "Dota2", // Пример игры
+    date: "2024-10-27",
+  },
+  {
+    id: "2",
+    team1: "Falcons",
+    team2: "Spirit",
+    score: "1 - 0",
+    tournament: "ESL One Bangkok 2024",
+    logo1: require("@/assets/images/teams/tf.png"),
+    logo2: require("@/assets/images/teams/ts.png"),
+    game: "LoL", // Пример игры
+    date: "2024-10-27",
+  },
+  {
+    id: "3",
+    team1: "NaVi",
+    team2: "VP",
+    score: "1 - 0",
+    tournament: "ESL One Bangkok 2024",
+    logo1: require("@/assets/images/teams/NaVi.webp"),
+    logo2: require("@/assets/images/teams/VP.webp"),
+    game: "CSGO", // Пример игры
+    date: "2024-10-27",
+  },
+  {
+    id: "4",
+    team1: "Avulus",
+    team2: "Tundra",
+    score: "18:45",
+    tournament: "ESL One Bangkok 2024",
+    logo1: require("@/assets/images/teams/Avulus.webp"),
+    logo2: require("@/assets/images/teams/Tundra.webp"),
+    game: "Valorant", // Пример игры
+    date: "2024-10-27",
+  },
+];
 
-export default function HomeScreen() {
+export default function App() {
+  const [selectedTab, setSelectedTab] = useState("Matchs");
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <Text style={styles.headerTitle}>Esports</Text>
+
+      <View style={styles.tabsContainer}>
+        {["Matchs", "Tournaments"].map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            onPress={() => setSelectedTab(tab as any)}
+          >
+            <Text style={[styles.tab, selectedTab === tab && styles.activeTab]}>
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      <Text style={styles.title}>Results</Text>
+      <FlatList
+        data={matches}
+        renderItem={({ item }) => <MatchCard {...item} />}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginHorizontal: 16,
+    marginBottom: 15,
+    marginTop: 35,
+    color: "#235d3a",
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  tabsContainer: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+    justifyContent: "space-around",
+    marginBottom: 12,
+  },
+  tab: {
+    fontSize: 15,
+    fontWeight: "bold",
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    color: "gray",
+  },
+  activeTab: {
+    fontWeight: "bold",
+    borderBottomWidth: 3,
+    borderBottomColor: "#235d3a",
+    color: "#235d3a",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 12,
+    marginBottom: 12,
+    paddingHorizontal: 16,
+    color: "#235d3a",
   },
 });
